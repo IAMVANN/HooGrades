@@ -1,5 +1,6 @@
 import Navbar from "@/components/SignInNavbar";
 import { Outfit } from "next/font/google";
+import SignInBox from "@/components/SignInBox";
 
 const outfit = Outfit({
   subsets: ["latin"],
@@ -8,9 +9,12 @@ const outfit = Outfit({
 
 export default function SignIn() {
   return (
-    <main className={outfit.className}>
-      <Navbar {...outfit} />
-      <div>sign in</div>
-    </main>
+    <>
+      <div className={outfit.className}>
+        <Navbar {...outfit} />
+      </div>
+      <div className="mb-20" />
+      <SignInBox />
+    </>
   );
 }
