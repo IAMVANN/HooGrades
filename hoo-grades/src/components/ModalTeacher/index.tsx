@@ -1,4 +1,4 @@
-export default function Modal() {
+export default function ModalTeacher() {
   return (
     <>
       <div className="max-w-[70%] mx-auto p-10 rounded-3xl shadow-md bg-gray-100">
@@ -6,7 +6,7 @@ export default function Modal() {
           <h2 className="text-center text-2xl font-bold">Create Course</h2>
           <div>
             <label htmlFor="code" className="ml-[20px] block">
-              Course Code
+              Course Name
             </label>
             <input
               type="code"

@@ -1,5 +1,5 @@
 import Course from "../Course";
-import Modal from "../Modal";
+import ModalStudent from "../ModalStudent";
 import { useEffect, useState } from "react";
 export default function CoursePageStudent() {
   const [courses, setCourses] = useState([
@@ -52,7 +52,7 @@ export default function CoursePageStudent() {
               </button>
             </div>
             <div className="mt-2">
-              <Modal />
+              <ModalStudent />
             </div>
           </div>
         </div>
