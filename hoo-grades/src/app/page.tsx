@@ -1,4 +1,8 @@
-import Navbar from "@/components/UnloggedInNavbar";
+"use client";
+import { useEffect, useState } from "react";
+import UnloggedInNavbar from "@/components/Navbars/UnloggedInNavbar";
+import LoggedInNavbar from "@/components/Navbars/LoggedInNavbar";
+import CoursePage from "@/components/CoursePage";
 import { Outfit } from "next/font/google";
 
 const outfit = Outfit({
@@ -7,9 +11,25 @@ const outfit = Outfit({
 });
 
 export default function Home() {
-  return (
-    <main className={outfit.className}>
-      <Navbar {...outfit} />
-    </main>
-  );
+  const [primaryKey, setPrimaryKey] = useState("");
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    setPrimaryKey(localStorage.getItem("primaryKey") || "");
+    setLoading(false);
+  }, []);
+  if (loading) return null;
+  if (primaryKey) {
+    return (
+      <main className={outfit.className}>
+        <LoggedInNavbar {...outfit} />
+        <CoursePage />
+      </main>
+    );
+  } else {
+    return (
+      <main className={outfit.className}>
+        <UnloggedInNavbar {...outfit} />
+      </main>
+    );
+  }
 }

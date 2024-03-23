@@ -6,11 +6,11 @@ const outfit = Outfit({
   weight: "400",
 });
 
-export default function Contact() {
+export default function Pricing() {
   return (
     <main className={outfit.className}>
       <Navbar {...outfit} />
-      about
+      pricing
     </main>
   );
 }
