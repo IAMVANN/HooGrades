@@ -1,7 +1,7 @@
 import Course from "../Course";
 import Modal from "../Modal";
 import { useEffect, useState } from "react";
-export default function CoursePage() {
+export default function CoursePageStudent() {
   const [courses, setCourses] = useState([
     { key: 0, name: "", numberOfAssignments: 0 },
   ]);

@@ -4,8 +4,10 @@ import { useEffect, useState } from "react";
 export default function LoggedInNavbar(props: { className: string }) {
   const [firstName, setFirstName] = useState("");
   const [loading, setLoading] = useState(true);
+  const [role, setRole] = useState("");
   useEffect(() => {
     setFirstName(localStorage.getItem("firstName") || "");
+    setRole(localStorage.getItem("role") || "");
     setLoading(false);
   }, []);
   if (loading) return null;
