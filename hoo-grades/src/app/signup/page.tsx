@@ -1,4 +1,4 @@
-import Navbar from "@/components/UnloggedInNavbar";
+import Navbar from "@/components/Navbars/UnloggedInNavbar";
 import { Outfit } from "next/font/google";
 import SignUpBox from "@/components/SignUpBox";
 

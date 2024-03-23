@@ -1,4 +1,4 @@
-import Navbar from "@/components/SignInNavbar";
+import Navbar from "@/components/Navbars/SignInNavbar";
 import { Outfit } from "next/font/google";
 import SignInBox from "@/components/SignInBox";
 

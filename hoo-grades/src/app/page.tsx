@@ -1,13 +1,9 @@
-<<<<<<< HEAD
-import Navbar from "@/components/UnloggedInNavbar";
-import Footer from "@/components/footer";
-=======
 "use client";
+import Footer from "@/components/footer";
 import { useEffect, useState } from "react";
 import UnloggedInNavbar from "@/components/Navbars/UnloggedInNavbar";
 import LoggedInNavbar from "@/components/Navbars/LoggedInNavbar";
 import CoursePage from "@/components/CoursePage";
->>>>>>> f9ae85b257ae0b465d4adf692ef3e32bbf472425
 import { Outfit } from "next/font/google";
 
 const outfit = Outfit({
@@ -16,16 +12,6 @@ const outfit = Outfit({
 });
 
 export default function Home() {
-<<<<<<< HEAD
-  return (
-    <div className="flex flex-col min-h-screen">
-      <main className={`flex-grow ${outfit.className}`}>
-        <Navbar {...outfit} />
-      </main>
-      <Footer />
-    </div>
-  );
-=======
   const [primaryKey, setPrimaryKey] = useState("");
   const [loading, setLoading] = useState(true);
   useEffect(() => {
@@ -42,10 +28,12 @@ export default function Home() {
     );
   } else {
     return (
-      <main className={outfit.className}>
-        <UnloggedInNavbar {...outfit} />
-      </main>
+      <div className="flex flex-col min-h-screen">
+        <main className={`flex-grow ${outfit.className}`}>
+          <UnloggedInNavbar {...outfit} />
+        </main>
+        <Footer />
+      </div>
     );
   }
->>>>>>> f9ae85b257ae0b465d4adf692ef3e32bbf472425
 }
