@@ -37,7 +37,9 @@ export default function SignInBox() {
         console.log(data.message);
         setShowErrorMessage(data.message);
       } else {
-        data.primaryKey && localStorage.setItem("primaryKey", data.primaryKey);
+        localStorage.setItem("primaryKey", formData.email);
+        localStorage.setItem("firstName", data.first_name);
+        localStorage.setItem("role", data.role);
         router.push("/");
       }
     } catch (error) {

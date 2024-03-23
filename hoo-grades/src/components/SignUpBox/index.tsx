@@ -38,7 +38,10 @@ export default function SignUpBox() {
       if (data.message) {
         console.log(data.message);
         setShowErrorMessage(data.message);
-      } else router.push("/");
+      } else {
+        data.primaryKey && localStorage.setItem("primaryKey", data.primaryKey);
+        router.push("/");
+      }
     } catch (error) {
       console.error(error);
     }
@@ -87,7 +90,7 @@ export default function SignUpBox() {
             id="email"
             name="email"
             className="w-full p-[10px] rounded-3xl border border-gray-300"
-            value={formData.email}
+            value={formData.email.toLowerCase()}
             onChange={handleChange}
             required
           />
