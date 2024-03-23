@@ -1,3 +1,4 @@
+import Link from "next/link";
 export default function SignInBox() {
   return (
     <>
@@ -40,7 +41,7 @@ export default function SignInBox() {
             type="button"
             className="p-2 rounded-md border-none text-blue-600 bg-transparent hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50 cursor-pointer"
           >
-            Create Account
+            <Link href="/signup">Create Account</Link>
           </button>
         </form>
       </div>

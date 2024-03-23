@@ -49,12 +49,6 @@ export default function SignUpBox() {
             type="submit"
             className="p-2 rounded-md border-none text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50 cursor-pointer"
           >
-            Log in
-          </button>
-          <button
-            type="button"
-            className="p-2 rounded-md border-none text-blue-600 bg-transparent hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50 cursor-pointer"
-          >
             Create Account
           </button>
         </form>
