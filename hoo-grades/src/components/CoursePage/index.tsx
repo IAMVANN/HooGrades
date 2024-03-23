@@ -1,10 +1,12 @@
 import Course from "../Course";
+import Modal from "../Modal";
 import { useEffect, useState } from "react";
 export default function CoursePage() {
   const [courses, setCourses] = useState([
     { key: 0, name: "", numberOfAssignments: 0 },
   ]);
   const [loading, setLoading] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   useEffect(() => {
     setCourses([
       // sample not real code
@@ -14,6 +16,9 @@ export default function CoursePage() {
     ]);
     setLoading(false);
   }, []);
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
 
   if (loading) return null;
   return (
@@ -29,13 +34,28 @@ export default function CoursePage() {
               />
             </a>
           ))}
-          <a href="/">
-            <div className="w-[345px] h-[200px] rounded-3xl bg-[#0B6FFF] flex items-center justify-center text-white text-center">
-              Add Course
-            </div>
-          </a>
+          <button
+            onClick={openModal}
+            className="w-[345px] h-[200px] rounded-3xl bg-[#0B6FFF] flex items-center justify-center text-white text-center cursor-pointer"
+          >
+            Add Course
+          </button>
         </div>
       </div>
+      {isModalOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+          <div className="bg-white p-5 rounded-lg shadow-lg w-[90%] max-w-xl">
+            <div className="text-right">
+              <button onClick={closeModal} className="text-xl font-bold">
+                &times;
+              </button>
+            </div>
+            <div className="mt-2">
+              <Modal />
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
