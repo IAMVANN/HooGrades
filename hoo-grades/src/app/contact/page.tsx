@@ -10,7 +10,7 @@ export default function Contact() {
   return (
     <main className={outfit.className}>
       <Navbar {...outfit} />
-      about
+      contact
     </main>
   );
 }
