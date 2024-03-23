@@ -1,4 +1,4 @@
-import Navbar from "@/components/Navbar";
+import Navbar from "@/components/UnloggedInNavbar";
 import { Outfit } from "next/font/google";
 
 const outfit = Outfit({
