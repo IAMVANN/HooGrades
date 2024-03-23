@@ -15,7 +15,7 @@ export default function UnloggedInNavbar(props: { className: string }) {
           <a href="/contact">contact</a>
         </div>
         <div className="text-xl mt-auto mb-auto">
-          <a href="/signin">signin</a>
+          <a href="/signin">sign in</a>
         </div>
       </div>
     </div>
