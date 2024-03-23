@@ -13,7 +13,7 @@ export default function SignIn() {
       <div className={outfit.className}>
         <Navbar {...outfit} />
       </div>
-      <div className="mb-20" />
+      <div className="mb-[35px]" />
       <SignInBox />
     </>
   );

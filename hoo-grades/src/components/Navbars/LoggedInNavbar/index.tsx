@@ -25,7 +25,7 @@ export default function LoggedInNavbar(props: { className: string }) {
               localStorage.clear();
             }}
           >
-            signout
+            sign out
           </a>
         </div>
       </div>

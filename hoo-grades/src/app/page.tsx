@@ -1,5 +1,5 @@
 "use client";
-import Footer from "@/components/footer";
+import Footer from "@/components/Footer";
 import { useEffect, useState } from "react";
 import UnloggedInNavbar from "@/components/Navbars/UnloggedInNavbar";
 import LoggedInNavbar from "@/components/Navbars/LoggedInNavbar";
