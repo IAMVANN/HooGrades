@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 
 export default function SignUpBox() {
   const router = useRouter();
+  const [showErrorMessage, setShowErrorMessage] = useState("");
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -34,11 +35,11 @@ export default function SignUpBox() {
         }
       );
       const data = await response.json();
-      // Handle the response data
-      console.log(data);
-      router.push("/");
+      if (data.message) {
+        console.log(data.message);
+        setShowErrorMessage(data.message);
+      } else router.push("/");
     } catch (error) {
-      // Handle the error
       console.error(error);
     }
   };
@@ -128,6 +129,11 @@ export default function SignUpBox() {
         >
           Create Account
         </button>
+        {showErrorMessage ? (
+          <div className="text-red-500 text-center">{showErrorMessage}</div>
+        ) : (
+          ""
+        )}
       </form>
     </div>
   );

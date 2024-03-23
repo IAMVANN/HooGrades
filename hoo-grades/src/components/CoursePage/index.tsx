@@ -24,6 +24,7 @@ export default function CoursePage() {
           {courses.map((course) => (
             <a href={`/assignment/${course.key}`}>
               <Course
+                key={course.key}
                 courseName={course.name}
                 numberOfAssignments={course.numberOfAssignments}
               />
