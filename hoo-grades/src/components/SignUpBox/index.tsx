@@ -52,6 +52,7 @@ export default function SignUpBox() {
       } else {
         localStorage.setItem("primaryKey", formData.email);
         localStorage.setItem("role", formData.role);
+        localStorage.setItem("firstName", formData.first_name);
         router.push("/");
       }
     } catch (error) {
