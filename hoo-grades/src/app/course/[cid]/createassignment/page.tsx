@@ -155,7 +155,7 @@ export default function CreateAssignment({
                   type="text"
                   id={`question_name${index}`}
                   name={`question_name${index}`}
-                  value={question}
+                  value={question.name}
                   onChange={(e) => {
                     handleQuestionChange(
                       index,
@@ -174,7 +174,7 @@ export default function CreateAssignment({
                 <textarea
                   className="h-[100px] shadow appearance-none border rounded-3xl w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
                   id={`question${index}`}
-                  value={question}
+                  value={question.content}
                   onChange={(e) => {
                     handleQuestionChange(index, "content", e.target.value);
                   }}
@@ -189,7 +189,7 @@ export default function CreateAssignment({
                 <textarea
                   className="h-[100px] shadow appearance-none border rounded-3xl w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
                   id={`question${index}`}
-                  value={question}
+                  value={question.rubric}
                   onChange={(e) => {
                     handleQuestionChange(index, "rubric", e.target.value);
                   }}
