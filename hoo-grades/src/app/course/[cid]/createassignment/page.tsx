@@ -206,7 +206,7 @@ export default function CreateAssignment({
                   min="0"
                   className="h-[50px] shadow appearance-none border rounded-3xl w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
                   id={`question${index}`}
-                  value={question}
+                  value={question.points}
                   onChange={(e) =>
                     handleQuestionChange(index, "points", e.target.value)
                   }
