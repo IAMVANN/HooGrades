@@ -34,7 +34,7 @@ export default function Course({ params }: { params: { cid: string } }) {
             },
             body: JSON.stringify({
               email: localStorage.getItem("primaryKey"),
-              course_name: params.cid,
+              course_name: params.cid.replace(/%20/g, " "),
             }),
           }
         );
@@ -108,6 +108,7 @@ export default function Course({ params }: { params: { cid: string } }) {
         <div className="grid grid-cols-1 gap-4">
           {assignments?.map((assignment) => (
             <a
+              key={assignment.assignment_id}
               href={`/course/${params.cid}/assignment/${assignment.assignment_id}`}
             >
               <AssignmentBox
@@ -120,9 +121,11 @@ export default function Course({ params }: { params: { cid: string } }) {
             </a>
           ))}
           {localStorage.getItem("role") === "teacher" ? (
-            <div className="flex w-[100%] h-[75px] rounded-3xl p-5 text-sm bg-[#0B6FFF] justify-between items-center">
-              <div className="text-white mx-auto ">Create Assignment</div>
-            </div>
+            <a href={`/course/${params.cid}/createassignment`}>
+              <div className="flex w-[100%] h-[75px] rounded-3xl p-5 text-sm bg-[#0B6FFF] justify-between items-center">
+                <div className="text-white mx-auto ">Create Assignment</div>
+              </div>
+            </a>
           ) : (
             ""
           )}

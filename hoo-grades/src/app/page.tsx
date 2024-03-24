@@ -6,6 +6,7 @@ import LoggedInNavbar from "@/components/Navbars/LoggedInNavbar";
 import CoursePageStudent from "@/components/CoursePageStudent";
 import CoursePageTeacher from "@/components/CoursePageTeacher";
 import { Outfit } from "next/font/google";
+import Hero from "@/components/Hero";
 
 const outfit = Outfit({
   subsets: ["latin"],
@@ -43,8 +44,9 @@ export default function Home() {
       <div className="flex flex-col min-h-screen">
         <main className={`flex-grow ${outfit.className}`}>
           <UnloggedInNavbar {...outfit} />
+          <Hero />
+          <Footer />
         </main>
-        <Footer />
       </div>
     );
   }

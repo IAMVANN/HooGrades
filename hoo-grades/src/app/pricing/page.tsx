@@ -19,7 +19,7 @@ export default function Pricing() {
           <div className="">
             <a
               href="/signup"
-              className="bg-[#0B6FFF] text-white p-5 rounded-xl w-[50%]"
+              className="bg-[#0B6FFF] text-white p-5 rounded-3xl w-[50%]"
             >
               Get started for free
             </a>

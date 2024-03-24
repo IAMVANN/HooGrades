@@ -46,7 +46,7 @@ export default function CoursePageTeacher() {
         <div className="text-3xl mb-10">Your Courses</div>
         <div className="grid grid-cols-3 gap-4">
           {courses.map((course) => (
-            <a href={`/course/${course.course_name}`}>
+            <a key={course.course_name} href={`/course/${course.course_name}`}>
               <Course
                 key={course.course_name}
                 courseName={course.course_name}

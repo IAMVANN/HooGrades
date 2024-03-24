@@ -21,15 +21,18 @@ export default function Assignment({
       content: "",
     },
   ]);
+
   const [loading, setLoading] = useState(true);
   const [assignmentName, setAssignmentName] = useState("");
   const [status, setStatus] = useState("");
   const [feedback, setFeedback] = useState("");
   const [submission, setSubmission] = useState("");
+  const [role, setRole] = useState("");
 
   useEffect(() => {
     const retrieve = async () => {
       try {
+        setRole(localStorage.getItem("role") || "");
         const response = await fetch(
           "https://ajsuccic54.execute-api.us-east-1.amazonaws.com/prod/getQuestionsFromAssignment",
           {
@@ -92,7 +95,13 @@ export default function Assignment({
       };
 
       try {
-        const response = await fetch(url, options);
+        const response = await fetch(url, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+          body: file,
+        });
         if (response.ok) {
           console.log("Upload successful");
           const publicUrl = url; // The URL to access the uploaded file
@@ -105,6 +114,7 @@ export default function Assignment({
         console.error("Error uploading file:", error);
       }
 
+      console.log(params.aid.replace(/%20/g, " "));
       const response2 = await fetch(
         "https://ajsuccic54.execute-api.us-east-1.amazonaws.com/prod/submitAssignment",
         {
@@ -125,6 +135,40 @@ export default function Assignment({
     }
   };
 
+  const gradeAssignment = async () => {
+    console.log(params.cid.replace(/%20/g, " "));
+    console.log(assignmentName);
+    const response = await fetch(
+      "https://ajsuccic54.execute-api.us-east-1.amazonaws.com/prod/gradeAssignment",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          course_name: params.cid.replace(/%20/g, " "),
+          assignment_name: assignmentName,
+        }),
+      }
+    );
+    const data = await response.json();
+    console.log(data.toGrade);
+    data.toGrade.forEach(async (submissio: any) => {
+      const response2 = await fetch("localhost:3000/api/openai", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          assignment_id: submissio.assignment_id,
+          submission_url: submissio.submission,
+          rubric: submissio.rubric,
+        }),
+      });
+      const data2 = await response2.json();
+      if (data2.success) {
+        alert("Assignment graded!");
+      } else {
+        alert("Error grading assignment");
+      }
+    });
+  };
   return (
     <main className={outfit.className}>
       <LoggedInNavbar {...outfit} />
@@ -137,10 +181,13 @@ export default function Assignment({
             Back
           </button>
         </a>
-        <div className="mt-5 text-3xl">{assignmentName}</div>
+        <div className="flex">
+          <div className="mt-5 text-3xl">{assignmentName}</div>
+          {status && <div className="mt-5 ml-auto text-2xl">{status}</div>}
+        </div>
         <div className="mt-10">
           {questions?.map((question) => (
-            <div>
+            <div key={question.question_number}>
               <div className="flex">
                 <div className="text-xl">
                   Question {question.question_number}
@@ -154,36 +201,51 @@ export default function Assignment({
               </div>
             </div>
           ))}
+          {feedback && <div>Feedback: {feedback}</div>}
         </div>
-        <div className="flex justify-center w-[70%] mx-auto">
-          <label
-            for="file-upload"
-            className="flex justify-center mx-auto w-[40%] p-2 rounded-3xl border-none text-blue-600 bg-transparent hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50 cursor-pointer"
-          >
-            {file !== null ? (
-              <div onClick={deleteSubmission}>Remove Submission</div>
-            ) : (
-              "Upload Submission"
-            )}
-          </label>
-          <input
-            id="file-upload"
-            type="file"
-            onChange={handleFileChange}
-            className="hidden"
-          />
-          <button
-            onClick={uploadFile}
-            className="mx-auto w-[40%] p-2 rounded-3xl border-none text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50 cursor-pointer"
-          >
-            {submission ? "Resubmit" : "Submit"}
-          </button>
-        </div>
-        {submission && (
-          <div className="">
-            <div className="flex justify-center text-3xl mt-10">Submission</div>
-            <img className="w-[60%] mx-auto mb-10" src={submission} />
+        {role === "teacher" ? (
+          <div></div>
+        ) : (
+          <div className="flex justify-center w-[70%] mx-auto">
+            <label
+              htmlFor="file-upload"
+              className="flex justify-center mx-auto w-[40%] p-2 rounded-3xl border-none text-blue-600 bg-transparent hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50 cursor-pointer"
+            >
+              Upload Submission
+              <input
+                id="file-upload"
+                type="file"
+                onChange={handleFileChange}
+                className="hidden"
+              />
+            </label>
+
+            <button
+              onClick={uploadFile}
+              className="mx-auto w-[40%] p-2 rounded-3xl border-none text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50 cursor-pointer"
+            >
+              {submission ? "Resubmit" : "Submit"}
+            </button>
           </div>
+        )}
+        {role === "teacher" ? (
+          <div className="flex justify-center w-[70%] mx-auto">
+            <button
+              onClick={gradeAssignment}
+              className="mx-auto w-[40%] p-2 rounded-3xl border-none text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50 cursor-pointer"
+            >
+              Grade
+            </button>
+          </div>
+        ) : (
+          submission && (
+            <div className="">
+              <div className="flex justify-center text-3xl mt-10">
+                Submission
+              </div>
+              <img className="w-[60%] mx-auto mb-10" src={submission} />
+            </div>
+          )
         )}
       </div>
     </main>
