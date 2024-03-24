@@ -36,12 +36,12 @@ export default function ModalStudent() {
     if (data.message) {
       setShowErrorMessage(data.message);
     } else {
-      router.push("/");
+      location.reload();
     }
   };
 
   return (
-    <div className="max-w-[70%] mx-auto p-10 rounded-3xl shadow-md bg-gray-100">
+    <div className="max-w-[70%] mx-auto p-10 rounded-3xl">
       <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
         <h2 className="text-center text-2xl font-bold">Add Course</h2>
         <div>

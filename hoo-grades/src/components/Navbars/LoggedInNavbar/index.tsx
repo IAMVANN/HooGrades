@@ -17,9 +17,15 @@ export default function LoggedInNavbar(props: { className: string }) {
         <div className="text-4xl mt-[25px] font-bold">
           <a href="/">HooGrades</a>
         </div>
-        <div className="text-xl mt-auto mb-auto ml-auto mr-5">
-          hello {firstName}
-        </div>
+        {role === "student" ? (
+          <div className="text-xl mt-auto mb-auto ml-auto mr-5">
+            hello {firstName}
+          </div>
+        ) : (
+          <div className="text-xl mt-auto mb-auto ml-auto mr-5">
+            hello professor {firstName}
+          </div>
+        )}
         <div className="text-xl mt-auto mb-auto">
           <a
             href="/"
