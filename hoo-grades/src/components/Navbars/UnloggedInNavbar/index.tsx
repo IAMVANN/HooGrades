@@ -11,9 +11,6 @@ export default function UnloggedInNavbar(props: { className: string }) {
         <div className="text-xl mt-auto mb-auto mr-5">
           <a href="/pricing">pricing</a>
         </div>
-        <div className="text-xl mt-auto mb-auto mr-5">
-          <a href="/contact">contact</a>
-        </div>
         <div className="text-xl mt-auto mb-auto">
           <a href="/signin">sign in</a>
         </div>
