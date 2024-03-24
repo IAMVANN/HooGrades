@@ -121,7 +121,7 @@ export default function Course({ params }: { params: { cid: string } }) {
           ))}
           {localStorage.getItem("role") === "teacher" ? (
             <div className="flex w-[100%] h-[75px] rounded-3xl p-5 text-sm bg-[#0B6FFF] justify-between items-center">
-              <div className="text-white mx-auto">Create Assignment</div>
+              <div className="text-white mx-auto ">Create Assignment</div>
             </div>
           ) : (
             ""
