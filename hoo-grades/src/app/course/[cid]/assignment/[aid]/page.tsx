@@ -25,6 +25,7 @@ export default function Assignment({
   const [assignmentName, setAssignmentName] = useState("");
   const [status, setStatus] = useState("");
   const [feedback, setFeedback] = useState("");
+  const [submission, setSubmission] = useState("");
 
   useEffect(() => {
     const retrieve = async () => {
@@ -49,6 +50,8 @@ export default function Assignment({
         setAssignmentName(data.assignment_name);
         setStatus(data.status);
         setFeedback(data.feedback);
+        setSubmission(data.submission);
+        deleteSubmission();
         setLoading(false);
       } catch (error) {
         console.error(error);
@@ -56,6 +59,71 @@ export default function Assignment({
     };
     retrieve();
   }, []);
+
+  const [file, setFile] = useState({ name: "", type: "" });
+
+  // Function to handle file selection
+  const handleFileChange = (event: any) => {
+    setFile(event.target.files[0]);
+  };
+
+  const deleteSubmission = () => {
+    setFile(null);
+  };
+
+  // Function to upload the file
+  const uploadFile = async () => {
+    if (!file) {
+      alert("Please select a file first!");
+      return;
+    }
+
+    try {
+      // Step 1: Request a presigned URL from your server
+      const url = `https://hoogrades.s3.amazonaws.com/${Date.now()}-${
+        file.name
+      }`;
+      const options = {
+        method: "PUT",
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+        body: file,
+      };
+
+      try {
+        const response = await fetch(url, options);
+        if (response.ok) {
+          console.log("Upload successful");
+          const publicUrl = url; // The URL to access the uploaded file
+          console.log("Access your file here:", publicUrl);
+          // You can set state here to display the image or the URL
+        } else {
+          console.error("Upload failed", response);
+        }
+      } catch (error) {
+        console.error("Error uploading file:", error);
+      }
+
+      const response2 = await fetch(
+        "https://ajsuccic54.execute-api.us-east-1.amazonaws.com/prod/submitAssignment",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            assignment_id: params.aid.replace(/%20/g, " "),
+            submission: url,
+          }),
+        }
+      );
+      const data = await response2.json();
+      data.success
+        ? alert("Assignment submitted!")
+        : alert("Error submitting assignment");
+    } catch (error) {
+      console.error("Error getting presigned URL:", error);
+    }
+  };
 
   return (
     <main className={outfit.className}>
@@ -69,18 +137,54 @@ export default function Assignment({
             Back
           </button>
         </a>
-        <div className="mt-10 text-3xl">{assignmentName}</div>
-        <div>
+        <div className="mt-5 text-3xl">{assignmentName}</div>
+        <div className="mt-10">
           {questions?.map((question) => (
             <div>
-              <div>{question.question_number}</div>
-              <div>{question.Points}</div>
-              <div>{question.rubric}</div>
-              <div>{question.content}</div>
+              <div className="flex">
+                <div className="text-xl">
+                  Question {question.question_number}
+                </div>
+                <div className="ml-auto text-xl">{question.Points} Points</div>
+              </div>
+              <div className="text-xl">{question.content}</div>
+              <div className="mb-10">
+                <div className="text-xl">Rubric</div>
+                {question.rubric}
+              </div>
             </div>
           ))}
         </div>
-        <div></div>
+        <div className="flex justify-center w-[70%] mx-auto">
+          <label
+            for="file-upload"
+            className="flex justify-center mx-auto w-[40%] p-2 rounded-3xl border-none text-blue-600 bg-transparent hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50 cursor-pointer"
+          >
+            {file !== null ? (
+              <div onClick={deleteSubmission}>Remove Submission</div>
+            ) : (
+              "Upload Submission"
+            )}
+          </label>
+          <input
+            id="file-upload"
+            type="file"
+            onChange={handleFileChange}
+            className="hidden"
+          />
+          <button
+            onClick={uploadFile}
+            className="mx-auto w-[40%] p-2 rounded-3xl border-none text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50 cursor-pointer"
+          >
+            {submission ? "Resubmit" : "Submit"}
+          </button>
+        </div>
+        {submission && (
+          <div className="">
+            <div className="flex justify-center text-3xl mt-10">Submission</div>
+            <img className="w-[60%] mx-auto mb-10" src={submission} />
+          </div>
+        )}
       </div>
     </main>
   );

@@ -111,7 +111,7 @@ export default function SignUpBox() {
           />
         </div>
         <div>
-          <label htmlFor="role" className="ml-[10px] block">
+          <label htmlFor="role" className="ml-[20px] block">
             Role
           </label>
           <select
