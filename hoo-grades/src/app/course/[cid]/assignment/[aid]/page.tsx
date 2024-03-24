@@ -71,7 +71,7 @@ export default function Assignment({
   };
 
   const deleteSubmission = () => {
-    setFile(null);
+    setFile({ name: "", type: "" });
   };
 
   // Function to upload the file
@@ -86,13 +86,6 @@ export default function Assignment({
       const url = `https://hoogrades.s3.amazonaws.com/${Date.now()}-${
         file.name
       }`;
-      const options = {
-        method: "PUT",
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-        body: file,
-      };
 
       try {
         const response = await fetch(url, {
@@ -100,6 +93,7 @@ export default function Assignment({
           headers: {
             "Content-Type": "multipart/form-data",
           },
+          // @ts-expect-error
           body: file,
         });
         if (response.ok) {
