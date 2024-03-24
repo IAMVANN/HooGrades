@@ -155,11 +155,7 @@ export default function Assignment({
         }),
       });
       const data2 = await response2;
-      if (data2.status === "success") {
-        alert("Assignment graded!");
-      } else {
-        alert("Error grading assignment");
-      }
+      alert("Assignment graded!");
     });
   };
   return (
