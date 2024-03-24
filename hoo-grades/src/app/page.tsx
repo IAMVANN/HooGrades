@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import UnloggedInNavbar from "@/components/Navbars/UnloggedInNavbar";
 import LoggedInNavbar from "@/components/Navbars/LoggedInNavbar";
 import CoursePageStudent from "@/components/CoursePageStudent";
+import CoursePageTeacher from "@/components/CoursePageTeacher";
 import { Outfit } from "next/font/google";
 
 const outfit = Outfit({
@@ -28,6 +29,13 @@ export default function Home() {
       <main className={outfit.className}>
         <LoggedInNavbar {...outfit} />
         <CoursePageStudent />
+      </main>
+    );
+  } else if (primaryKey && role === "teacher") {
+    return (
+      <main className={outfit.className}>
+        <LoggedInNavbar {...outfit} />
+        <CoursePageTeacher />
       </main>
     );
   } else {

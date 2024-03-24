@@ -1,4 +1,4 @@
-export default function Modal() {
+export default function ModalTeacher() {
   return (
     <div className="max-w-[70%] mx-auto p-10 rounded-3xl">
       <form className="flex flex-col gap-5">
