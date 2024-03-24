@@ -144,19 +144,18 @@ export default function Assignment({
       }
     );
     const data = await response.json();
-    console.log(data.toGrade);
     data.toGrade.forEach(async (submissio: any) => {
-      const response2 = await fetch("localhost:3000/api/openai", {
+      const response2 = await fetch("http://localhost:3000/api/openai", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           assignment_id: submissio.assignment_id,
-          submission_url: submissio.submission,
+          submission: submissio.submission,
           rubric: submissio.rubric,
         }),
       });
-      const data2 = await response2.json();
-      if (data2.success) {
+      const data2 = await response2;
+      if (data2.status === "success") {
         alert("Assignment graded!");
       } else {
         alert("Error grading assignment");
