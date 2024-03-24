@@ -1,20 +1,39 @@
 import Course from "../Course";
 import ModalTeacher from "../ModalTeacher";
 import { useEffect, useState } from "react";
+
 export default function CoursePageTeacher() {
-  const [courses, setCourses] = useState([
-    { key: 0, name: "", numberOfAssignments: 0 },
-  ]);
+  const [courses, setCourses] = useState([{ course_name: "" }]);
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
   useEffect(() => {
-    setCourses([
-      // sample not real code
-      { key: 1, name: "Math", numberOfAssignments: 5 },
-      { key: 2, name: "Science", numberOfAssignments: 3 },
-      { key: 3, name: "History", numberOfAssignments: 2 },
-    ]);
-    setLoading(false);
+    const retrieve = async () => {
+      try {
+        const response = await fetch(
+          "https://ajsuccic54.execute-api.us-east-1.amazonaws.com/prod/getUserCourses",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              email: localStorage.getItem("primaryKey"),
+            }),
+          }
+        );
+        const data = await response.json();
+        console.log(data.courses);
+        if (data.message) {
+          console.log(data.message);
+        }
+        setCourses(data.courses);
+        setLoading(false);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    retrieve();
   }, []);
 
   const openModal = () => setIsModalOpen(true);
@@ -24,14 +43,13 @@ export default function CoursePageTeacher() {
   return (
     <div>
       <div className="ml-[15%] mr-[15%] mt-5">
-        <div className="text-3xl mb-10">Your Assignments</div>
+        <div className="text-3xl mb-10">Your Courses</div>
         <div className="grid grid-cols-3 gap-4">
           {courses.map((course) => (
-            <a href={`/assignment/${course.key}`}>
+            <a href={`/course/${course.course_name}`}>
               <Course
-                key={course.key}
-                courseName={course.name}
-                numberOfAssignments={course.numberOfAssignments}
+                key={course.course_name}
+                courseName={course.course_name}
               />
             </a>
           ))}

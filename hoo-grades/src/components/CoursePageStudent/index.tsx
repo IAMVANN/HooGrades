@@ -44,7 +44,7 @@ export default function CoursePageStudent() {
   return (
     <div>
       <div className="ml-[15%] mr-[15%] mt-5">
-        <div className="text-3xl mb-10">Your Assignments</div>
+        <div className="text-3xl mb-10">Your Courses</div>
         <div className="grid grid-cols-3 gap-4">
           {courses.map((course) => (
             <a href={`/course/${course.course_name}`}>
